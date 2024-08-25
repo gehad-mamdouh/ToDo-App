@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/firebase_utils.dart';
+import 'package:todo/provider/list_provider.dart';
+import 'package:todo/task_model.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   AddTaskBottomSheet({super.key});
@@ -12,9 +17,12 @@ class AddTaskBottomSheet extends StatefulWidget {
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   var formKey = GlobalKey<FormState>();
   var selectedDate = DateTime.now();
-
+  String title = '';
+  String description = '';
+  late ListProvider listProvider;
   @override
   Widget build(BuildContext context) {
+    listProvider = Provider.of<ListProvider>(context);
     return Container(
       child: Column(
         children: [
@@ -41,6 +49,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           }
                           return null;
                         },
+                        onChanged: (text) {
+                          title = text;
+                        },
                         decoration: InputDecoration(
                             hintText: 'Enter task title',
                             hintStyle: GoogleFonts.inter(
@@ -58,6 +69,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                                 color: Colors.grey)),
+                        onChanged: (text) {
+                          description = text;
+                        },
                         validator: (text) {
                           if (text == null || text.isEmpty) {
                             return 'Please enter task description';
@@ -118,7 +132,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   }
 
   void addTask() {
-    if (formKey.currentState?.validate() == true) {}
+    if (formKey.currentState?.validate() == true) {
+      Task task =
+          Task(title: title, dateTime: selectedDate, description: description);
+      FirebaseUtils.addTaskToFireStore(task).timeout(Duration(seconds: 1),
+          onTimeout: () {
+        print('task added successfully');
+        listProvider.getAllTasksFromFireStore();
+        Navigator.pop(context);
+      });
+    }
   }
 
   void showCalendar() async {

@@ -4,6 +4,7 @@ import 'package:todo/home/app_colors.dart';
 
 class MyThemeData {
   static final ThemeData lightTheme = ThemeData(
+      useMaterial3: false,
       primaryColor: AppColors.primaryColor,
       scaffoldBackgroundColor: AppColors.backgroundLightColor,
       appBarTheme:
