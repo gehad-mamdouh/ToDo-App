@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:todo/task_model.dart';
+import 'package:todo/models/task_model.dart';
 
 import '../firebase_utils.dart';
 
@@ -8,9 +8,9 @@ class ListProvider extends ChangeNotifier {
   List<Task> taskList = [];
   DateTime selectDate = DateTime.now();
 
-  void getAllTasksFromFireStore() async {
+  void getAllTasksFromFireStore(String uId) async {
     QuerySnapshot<Task> querySnapshot =
-        await FirebaseUtils.getTasksCollection().get();
+        await FirebaseUtils.getTasksCollection(uId).get();
 
     taskList = querySnapshot.docs.map((doc) => doc.data()).toList();
 
@@ -26,8 +26,8 @@ class ListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSelectDate(DateTime newSelectDate) {
+  void changeSelectDate(DateTime newSelectDate, String uId) {
     selectDate = newSelectDate;
-    getAllTasksFromFireStore();
+    getAllTasksFromFireStore(uId);
   }
 }

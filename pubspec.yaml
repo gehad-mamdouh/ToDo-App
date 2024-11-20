@@ -40,6 +40,9 @@ dependencies:
   firebase_core: ^3.3.0
   cloud_firestore: ^5.2.1
   provider: ^6.1.2
+  firebase_auth: ^5.2.0
+  connectivity_plus: ^3.0.3
+  rolling_switch: ^0.0.2
 
 
 

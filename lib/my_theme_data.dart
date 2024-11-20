@@ -38,7 +38,50 @@ class MyThemeData {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
+          shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+      )));
+
+  static final ThemeData darkTheme = ThemeData(
+      useMaterial3: false,
+      primaryColor: AppColors.primaryColor,
+      scaffoldBackgroundColor: AppColors.backgroundDarkColor,
+      appBarTheme:
+          AppBarTheme(elevation: 0, backgroundColor: AppColors.blackColor),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: AppColors.blackColor,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35),
+              side: BorderSide(color: AppColors.primaryColor, width: 4))),
+      textTheme: TextTheme(
+        titleLarge: GoogleFonts.poppins(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: AppColors.whiteColor),
+        titleMedium: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColors.whiteColor),
+        bodyLarge: GoogleFonts.poppins(
+            fontSize: 22,
+            fontWeight: FontWeight.w500,
+            color: AppColors.whiteColor),
+        bodyMedium: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColors.whiteColor),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: AppColors.primaryColor,
+        unselectedItemColor: AppColors.whiteColor,
+        backgroundColor: const Color(0xff060E1E),
+        elevation: 0,
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
           shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),
